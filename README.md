@@ -20,6 +20,7 @@ It's your first day on the job for a small movie theater company. Your program w
 Currently the current movie inventory is kept in a spreadsheet that Mildred manually enters into the marquee. Using a list of the movies exported to a text file, you need to produce a schedule of showings for the theater on a given day. Your application should read a file passed on the command line.
 
 The schedule should be created based on the theater's hours of operation for the given day. The theater hours are as follows (subject to change):
+
 ```
 Monday - Thursday 8:00am - 11:00pm
 Friday - Sunday 10:30am - 11:30pm
@@ -32,6 +33,7 @@ When the theater opens it takes one hour to setup the theater before any movies 
 ### Example Input
 
 Example Input File
+
 ```
 Movie Title, Release Year, MPAA Rating, Run Time
 There's Something About Mary, 1998, R, 2:14
