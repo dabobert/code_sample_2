@@ -10,7 +10,7 @@ require 'active_support/core_ext/numeric/time'
 # 1: A 
 
 
-class Theater
+class Multiplex
 
   def initialize(file)
     @file = file

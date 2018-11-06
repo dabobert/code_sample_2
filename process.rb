@@ -1,3 +1,3 @@
-require_relative 'theater'
+require_relative 'multiplex'
 
-Theater.new("/Users/jinx/projects/job_hunt/code_sample_theater/input.csv")
+Multiplex.new("/Users/jinx/projects/job_hunt/code_sample_multiplex/input.csv")
