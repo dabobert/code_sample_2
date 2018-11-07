@@ -42,18 +42,19 @@ class Multiplex
 
       # num_viewings = @hours_open.to_i/total_time
 
-      last = @close_time
+      last = @close_time - run_time
       loop do
         # subtract running time
-        current = last - run_time
+        # current = last - run_time
+        current = last
         # round minutes to the latest 5 minute increment
         rounded_minutes = current.strftime("%M").to_i.floor_to(5)
         # set last to the computed current with the rounded minutes
         last = current.change :min => rounded_minutes
         showtimes << [last, last + run_time]
         # decrement last showing by cleanup time
-        last -= @cleanup_time
-        break if last - run_time < @start_time
+        last = last - @cleanup_time - run_time
+        break if last < @start_time
       end
 
     showtimes.reverse!
