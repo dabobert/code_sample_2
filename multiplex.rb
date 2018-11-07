@@ -10,8 +10,6 @@ require 'rounding'
 require 'active_support'
 require 'active_support/core_ext/numeric/time'
 
-# Assmptions
-# 1: A theater will be cleaned after it's showing.  This will allow the movie to start immediatly at the beginning of the day
 
 
 class Multiplex
