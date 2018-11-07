@@ -67,7 +67,3 @@ High Fidelity - Rated R, 1:54
 ```
 
 Please note that the above example input file is not a complete set of records as we won't have client data for a few more weeks. You may build your own input files or records however you would like for development purposes. The client will eventually provide a new file every few weeks, so please indicate how to run the program with a specific file in your README.
-
-Email us a link to your repo when you're done!
-
-Have fun and please remember to not include our company name in your repo name, thank you!
