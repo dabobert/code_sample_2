@@ -1,3 +1,4 @@
 require_relative 'multiplex'
 
-Multiplex.new(ARGV[0])
+m = Multiplex.new(ARGV[0])
+m.display_showtimes

@@ -27,12 +27,10 @@ class Multiplex
     @today = Time.now.beginning_of_day
     @schedule = []
     parse_settings
-    parse_movies
-    display_showtimes
+    parse_showtimes
   end
 
-  def parse_movies
-    puts @today.strftime("%A %m/%d/%Y")
+  def parse_showtimes
     CSV.foreach(@file, :encoding=>"windows-1251:utf-8",:headers => true) do |orig_row|
       row = Hash[orig_row.to_hash.map { |k, v| [k.to_s.strip.downcase.gsub(" ","_").to_sym, v.to_s.encode("utf-8", "binary", :undef => :replace).strip] }]
       info = row
@@ -50,7 +48,6 @@ class Multiplex
         last = last - @cleanup_time - run_time
         break if last < @start_time
       end
-      binding.pry
       @schedule << info.merge(:showtimes => showtimes.reverse)
     end
   end
@@ -77,6 +74,14 @@ class Multiplex
 
 
   def display_showtimes
+    puts @today.strftime("%A %m/%d/%Y")
+    @schedule.each do |movie_info|
+      puts
+      puts "#{movie_info[:movie_title]} - Rated #{movie_info[:mpaa_rating]}, #{movie_info[:run_time]}"
+      movie_info[:showtimes].each do |showtimes|
+        puts "  #{showtimes[0].strftime("%H:%M")} - #{showtimes[1].strftime("%H:%M")}"
+      end
+    end
   end
 
 end
