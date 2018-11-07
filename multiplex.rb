@@ -36,25 +36,29 @@ class Multiplex
     CSV.foreach(@file, :encoding=>"windows-1251:utf-8",:headers => true) do |orig_row|
       row = Hash[orig_row.to_hash.map { |k, v| [k.to_s.strip.downcase.gsub(" ","_").to_sym, v.to_s.encode("utf-8", "binary", :undef => :replace).strip] }]
       info = row
-
+      showtimes = []
       run_time = Multiplex.convert_time_to_minutes_obj(row[:run_time])
-      total_time = run_time + @buffer_time
+      # total_time = run_time + @cleanup_time
 
-      num_viewings = @hours_open.to_i/total_time
+      # num_viewings = @hours_open.to_i/total_time
 
       last = @close_time
-      showtimes = 0.upto(num_viewings).collect do |i|
+      loop do
         # subtract running time
-        value = last - run_time
+        current = last - run_time
         # round minutes to the latest 5 minute increment
-        rounded_minutes = value.strftime("%M").to_i.floor_to(5)
-        # set last to the computed value with the rounded minutes
-        last = value.change :min => rounded_minutes
-        [last, last + run_time]
-      end.reverse
+        rounded_minutes = current.strftime("%M").to_i.floor_to(5)
+        # set last to the computed current with the rounded minutes
+        last = current.change :min => rounded_minutes
+        showtimes << [last, last + run_time]
+        # decrement last showing by cleanup time
+        last -= @cleanup_time
+        break if last - run_time < @start_time
+      end
+
+    showtimes.reverse!
 binding.pry
       @schedule << info
-
     end
   end
 
@@ -72,10 +76,10 @@ binding.pry
     # doing all of this so we can use activesupport's date/time arithmetic functionality
     #   create open time object
     @open_time   = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_start".to_sym])
-    #   create close time object
+    @start_time  = @open_time + settings[:setup_min].to_i.minutes
     @close_time  = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_end".to_sym])
-    @buffer_time = settings[:buffer_min].to_i.minutes
-    @hours_open  = @close_time - @open_time
+    @cleanup_time= settings[:cleanup_min].to_i.minutes
+    @hours_open  = @close_time - @start_time
   end
 
 
