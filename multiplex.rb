@@ -39,13 +39,16 @@ class Multiplex
       loop do
         # round minutes to the latest 5 minute increment
         rounded_minutes = last.strftime("%M").to_i.floor_to(5)
-        # set last to the computed current with the rounded minutes
+        # assign rounded minutes to the last time object
         last = last.change :min => rounded_minutes
+        # insert the latest showtimes
         showtimes << [last, last + run_time]
-        # decrement last showing by cleanup time
+        # decrement last showing by cleanup time and run time
         last = last - @cleanup_time - run_time
+        # stop if last time object starts before the theater has been cleaned
         break if last < @start_time
       end
+      # add the info to the schedule of movie listings
       @schedule << info.merge(:showtimes => showtimes.reverse)
     end
   end
@@ -61,8 +64,7 @@ class Multiplex
     else
       key = "weekend"
     end
-    # doing all of this so we can use activesupport's date/time arithmetic functionality
-    #   create open time object
+    
     @open_time   = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_start".to_sym])
     @start_time  = @open_time + settings[:setup_min].to_i.minutes
     @close_time  = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_end".to_sym])

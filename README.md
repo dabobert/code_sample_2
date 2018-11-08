@@ -1,3 +1,12 @@
+
+# Solution
+
+```
+ruby showtimes.rb input.csv
+ruby showtimes.rb /path/to/file.csv
+```
+
+
 # Challenge
 
 Welcome to the movies! Our team is interested in learning about your process, style, and implementation when solving a software problem. You are staffed on a new project for a movie theater client, the description is below. 
