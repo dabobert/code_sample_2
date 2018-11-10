@@ -45,21 +45,12 @@ describe Multiplex do
       expect(info[:release_year]).to eq("1998")
       expect(info[:mpaa_rating]).to eq("R")
       expect(info[:run_time]).to eq("2:14")
-
-
-
- # [{:movie_title=>,
- #  :release_year=>"1998",
- #  :mpaa_rating=>"R",
- #  :run_time=>"2:14",
- #  :showtimes=>
- #   [[2018-11-10 12:45:00 -0500, 2018-11-10 14:59:00 -0500],
- #    [2018-11-10 15:35:00 -0500, 2018-11-10 17:49:00 -0500],
- #    [2018-11-10 18:25:00 -0500, 2018-11-10 20:39:00 -0500],
- #    [2018-11-10 21:15:00 -0500, 2018-11-10 23:29:00 -0500]]}
-
-
-
+      showtimes = []
+      showtimes << [@today.change(:hour => 12, :min => 15), @today.change(:hour => 14, :min => 29)]
+      showtimes << [@today.change(:hour => 15, :min =>  5), @today.change(:hour => 17, :min => 19)]
+      showtimes << [@today.change(:hour => 17, :min => 55), @today.change(:hour => 20, :min =>  9)]
+      showtimes << [@today.change(:hour => 20, :min => 45), @today.change(:hour => 22, :min => 59)]
+      expect(info[:showtimes]).to match_array(showtimes)
     end
 
   end
