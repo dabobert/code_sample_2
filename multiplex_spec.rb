@@ -53,5 +53,15 @@ describe Multiplex do
       expect(info[:showtimes]).to match_array(showtimes)
     end
 
+    it "displays the showtimes correctly" do
+      test_output = "#{@today.strftime("%A %m/%d/%Y")}\n\n"
+test_output << %q(There's Something About Mary - Rated R, 2:14
+  12:15 - 14:29
+  15:05 - 17:19
+  17:55 - 20:09
+  20:45 - 22:59)
+      expect(showtimes_output.strip).to eq(test_output.strip)
+    end
+
   end
 end
