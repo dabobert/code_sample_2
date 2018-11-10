@@ -20,7 +20,8 @@ class Multiplex
     hours.to_i.hours + min.to_i.minutes
   end
 
-  def initialize(file)
+  def initialize(file, path_to_settings=File.join(__dir__, 'settings.yml'))
+    @path_to_settings = path_to_settings
     @file = file
     @today = Time.now.beginning_of_day
     @schedule = []
@@ -55,7 +56,7 @@ class Multiplex
 
   def parse_settings
     # load the settings
-    settings = YAML::load_file(File.join(__dir__, 'settings.yml'))
+    settings = YAML::load_file(@path_to_settings)
     # for testing purposes day of the week can be set via the settings
     day_of_week = settings[:day_of_week] || @today.wday
     # check if today is a weekday or not
