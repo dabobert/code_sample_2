@@ -17,7 +17,7 @@ class Multiplex
   WEEKDAYS = [1,2,3,4]
   WEEKENDS = ((0..6).to_a - WEEKDAYS)
 
-  attr_reader :open_time, :start_time, :close_time, :cleanup_time, :hours_open
+  attr_reader :open_time, :start_time, :close_time, :cleanup_time, :hours_open, :schedule
 
   # converts a time in format hh:mm to ActiveSupport::Duration object
   def self.convert_time_to_minutes_obj(string_time)
