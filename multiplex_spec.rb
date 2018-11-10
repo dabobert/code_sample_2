@@ -27,6 +27,18 @@ describe Multiplex do
       expect(@multiplex.hours_open).to eq(43200.0)
     end
 
+    it "understands weekday_hours" do
+      Multiplex::WEEKDAYS.each do |day|
+        expect(@multiplex.weekday_hours?(day)).to be(true)
+      end
+    end
+
+    it "understands weekend_hours" do
+      Multiplex::WEEKENDS.each do |day|
+        expect(@multiplex.weekday_hours?(day)).to be(false)
+      end
+    end
+
   end
 
   # it "finds the factorial of 5" do
