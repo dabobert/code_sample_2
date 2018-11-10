@@ -20,9 +20,9 @@ describe Multiplex do
     end
 
     it "properly parsed the settings yml" do
-      expect(@multiplex.open_time).to eq(@today.change(:hour => 10, :min => 30))
-      expect(@multiplex.start_time).to eq(@today.change(:hour => 11, :min => 30))
-      expect(@multiplex.close_time).to eq(@today.change(:hour => 23, :min => 30))
+      expect(@multiplex.open_time).to eq(@today.change(:hour => 10))
+      expect(@multiplex.start_time).to eq(@today.change(:hour => 11))
+      expect(@multiplex.close_time).to eq(@today.change(:hour => 23))
       expect(@multiplex.cleanup_time).to eq(2100.seconds)
       expect(@multiplex.hours_open).to eq(43200.0)
     end
@@ -37,6 +37,29 @@ describe Multiplex do
       Multiplex::WEEKENDS.each do |day|
         expect(@multiplex.weekday_hours?(day)).to be(false)
       end
+    end
+
+    it "parsed the showtimes correctly" do
+      info = @multiplex.schedule[0]
+      expect(info[:movie_title]).to eq("There's Something About Mary")
+      expect(info[:release_year]).to eq("1998")
+      expect(info[:mpaa_rating]).to eq("R")
+      expect(info[:run_time]).to eq("2:14")
+
+
+
+ # [{:movie_title=>,
+ #  :release_year=>"1998",
+ #  :mpaa_rating=>"R",
+ #  :run_time=>"2:14",
+ #  :showtimes=>
+ #   [[2018-11-10 12:45:00 -0500, 2018-11-10 14:59:00 -0500],
+ #    [2018-11-10 15:35:00 -0500, 2018-11-10 17:49:00 -0500],
+ #    [2018-11-10 18:25:00 -0500, 2018-11-10 20:39:00 -0500],
+ #    [2018-11-10 21:15:00 -0500, 2018-11-10 23:29:00 -0500]]}
+
+
+
     end
 
   end

@@ -1,7 +1,7 @@
 ---
-:weekday_start: "10:30"
-:weekday_end:   "23:30"
-:weekend_start: "10:30"
-:weekend_end:   "23:30"
+:weekday_start: "10:00"
+:weekday_end:   "23:00"
+:weekend_start: "10:00"
+:weekend_end:   "23:00"
 :cleanup_min: 35
 :setup_min: 60
