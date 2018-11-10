@@ -1,10 +1,71 @@
 
 # Solution
 
+## Execution
+To execute run
+
 ```
 ruby showtimes.rb input.csv
-ruby showtimes.rb /path/to/file.csv
 ```
+
+## Design
+
+The basic idea of my code is that time arithmetic can become annoying quickly.  As such I use the `activesupport` gem 's time functions in order to do date additions, comparisons and modifications.  To determine showtimes I start at the end of business hours and subtract runtime and cleaning time until the beginning of opening hours.  For rounding to the nearest 5 minute increment I used the `rounding` gem.  
+
+## Requirements & Libraries
+
+My solution uses ruby `2.1.3` with the following core features
+
+```
+csv # parsing csv file
+yaml # used to create config files 
+```
+
+and the following gems.  
+
+```
+activesupport (4.2.6) # for easier date/time arithmetic
+pry (0.12.0) # debugging
+rounding (1.0.1) # believe it better to use a stable rounding lib that roll up my own
+rspec (3.8.0) # testing
+```
+
+## Testing
+
+to execute testing run
+
+```
+rspec multiplex_spec.rb
+```
+
+
+everything passes but there is a deprecation warning
+
+```
+.....DEPRECATION WARNING: `#capture(stream)` is deprecated and will be removed in the next release. (called from block (3 levels) in <top (required)> at /Users/robertjenkins/projects/job_hunt/code_sample_multiplex/multiplex_spec.rb:66)
+.
+
+Finished in 0.01818 seconds (files took 0.7361 seconds to load)
+6 examples, 0 failures
+
+```
+
+
+This happens i'm using the stream function from action_support
+
+```
+showtimes_output = capture(:stdout) { @multiplex.display_showtimes }
+expect(showtimes_output.strip).to eq(test_output.strip)
+```
+
+The pure rspec version of this below FAILS because of non-matching whitespace.  Rather than fall into a rabbit hole at the 1-yard line I thought it better to mention my thought process and accept the deprecation warning.
+ 
+```
+expect{@multiplex.display_showtimes}.to output(test_output.strip).to_stdout
+```
+
+
+
 
 
 # Challenge
