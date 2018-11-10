@@ -60,6 +60,7 @@ test_output << %q(There's Something About Mary - Rated R, 2:14
   15:05 - 17:19
   17:55 - 20:09
   20:45 - 22:59)
+      showtimes_output = capture(:stdout) { @multiplex.display_showtimes }
       expect(showtimes_output.strip).to eq(test_output.strip)
     end
 
