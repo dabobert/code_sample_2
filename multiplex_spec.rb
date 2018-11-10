@@ -19,7 +19,12 @@ describe Multiplex do
     end
 
     it "properly parsed the settings yml" do
-      # binding.pry
+      today = Time.now.beginning_of_day
+      expect(@multiplex.open_time).to eq(today.change(:hour => 10, :min => 30))
+      expect(@multiplex.start_time).to eq(today.change(:hour => 11, :min => 30))
+      expect(@multiplex.close_time).to eq(today.change(:hour => 23, :min => 30))
+      expect(@multiplex.cleanup_time).to eq(2100.seconds)
+      expect(@multiplex.hours_open).to eq(43200.0)
     end
 
   end

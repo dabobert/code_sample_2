@@ -14,6 +14,8 @@ require 'active_support/core_ext/numeric/time'
 
 class Multiplex
 
+  attr_reader :open_time, :start_time, :close_time, :cleanup_time, :hours_open
+
   # converts a time in format hh:mm to ActiveSupport::Duration object
   def self.convert_time_to_minutes_obj(string_time)
     hours, min  = string_time.split(":")
