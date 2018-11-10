@@ -14,6 +14,9 @@ require 'active_support/core_ext/numeric/time'
 
 class Multiplex
 
+  WEEKDAYS = [1,2,3,4]
+  WEEKENDS = ((0..6).to_a - WEEKDAYS)
+
   attr_reader :open_time, :start_time, :close_time, :cleanup_time, :hours_open
 
   # converts a time in format hh:mm to ActiveSupport::Duration object
@@ -78,7 +81,7 @@ class Multiplex
 
 
   def weekday_hours?(day_of_week = @today.wday)
-    if [1,2,3,4].include?(day_of_week)
+    if WEEKDAYS.include?(day_of_week)
       true
     else
       false
