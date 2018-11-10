@@ -59,10 +59,11 @@ class Multiplex
   def parse_settings
     # load the settings
     settings = YAML::load_file(@path_to_settings)
+
     # for testing purposes day of the week can be set via the settings
     day_of_week = settings[:day_of_week] || @today.wday
     # check if today is a weekday or not
-    if [1,2,3,4].include?(@today.wday)
+    if weekday_hours?
       key = "weekday"
     else
       key = "weekend"
@@ -75,6 +76,14 @@ class Multiplex
     @hours_open  = @close_time - @start_time
   end
 
+
+  def weekday_hours?(day_of_week = @today.wday)
+    if [1,2,3,4].include?(day_of_week)
+      true
+    else
+      false
+    end
+  end
 
   def display_showtimes
     puts @today.strftime("%A %m/%d/%Y")
