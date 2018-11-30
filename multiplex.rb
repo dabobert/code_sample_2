@@ -25,12 +25,29 @@ class Multiplex
     hours.to_i.hours + min.to_i.minutes
   end
 
-  def initialize(file, path_to_settings=File.join(__dir__, 'mutliplex_settings.yml'))
-    @path_to_settings = path_to_settings
+  def initialize(file, options={})
+    if options[:day_of_week]
+      @today = Time.parse(options[:day_of_week])
+    else
+      @today = Time.now.beginning_of_day
+    end
+
+
+
+
+    if options[:settings_hash]
+      @settings_hash = options[:settings_hash]
+      parse_settings_from_hash
+    else options[:path_to_settings]
+      path_to_settings=File.join(__dir__, 'mutliplex_settings.yml')
+      @path_to_settings = path_to_settings
+      parse_settings_from_yml
+    end
+
+
+
     @file = file
-    @today = Time.now.beginning_of_day
     @schedule = []
-    parse_settings
     parse_showtimes
   end
 
@@ -59,12 +76,35 @@ class Multiplex
     end
   end
 
-  def parse_settings
+
+  def parse_settings_from_hash
+    # load the settings
+
+    settings = @settings_hash
+    # for testing purposes day of the week can be set via the settings
+    # day_of_week = settings[:day_of_week] || @today.wday
+    # check if today is a weekday or not
+    if weekday_hours?
+      key = "weekday"
+    else
+      key = "weekend"
+    end
+    
+    @open_time   = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_start".to_sym])
+    @start_time  = @open_time + settings[:setup_min].to_i.minutes
+    @close_time  = @today + Multiplex.convert_time_to_minutes_obj(settings["#{key}_end".to_sym])
+    @cleanup_time= settings[:cleanup_min].to_i.minutes
+    @hours_open  = @close_time - @start_time
+  end
+
+
+
+  def parse_settings_from_yml
     # load the settings
     settings = YAML::load_file(@path_to_settings)
 
     # for testing purposes day of the week can be set via the settings
-    day_of_week = settings[:day_of_week] || @today.wday
+    # day_of_week = settings[:day_of_week] || @today.wday
     # check if today is a weekday or not
     if weekday_hours?
       key = "weekday"
