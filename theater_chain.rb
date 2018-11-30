@@ -1,0 +1,2 @@
+class TheaterChain
+end
