@@ -25,7 +25,7 @@ class Multiplex
     hours.to_i.hours + min.to_i.minutes
   end
 
-  def initialize(file, path_to_settings=File.join(__dir__, 'settings.yml'))
+  def initialize(file, path_to_settings=File.join(__dir__, 'mutliplex_settings.yml'))
     @path_to_settings = path_to_settings
     @file = file
     @today = Time.now.beginning_of_day
