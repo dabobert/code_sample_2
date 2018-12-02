@@ -11,7 +11,6 @@ require 'active_support'
 require 'active_support/core_ext/numeric/time'
 
 
-
 class Multiplex
 
   WEEKDAYS = [1,2,3,4]
@@ -39,7 +38,7 @@ class Multiplex
       @settings_hash = options[:settings_hash]
       parse_settings_from_hash
     else options[:path_to_settings]
-      path_to_settings=File.join(__dir__, 'mutliplex_settings.yml')
+      path_to_settings=File.join(__dir__, 'settings_mutliplex.yml')
       @path_to_settings = path_to_settings
       parse_settings_from_yml
     end

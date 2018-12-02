@@ -1,6 +1,25 @@
 
 # Solution
 
+## Weekly Showtimes
+To execute run
+
+```
+ruby weekly.rb input.csv
+```
+
+
+# Theater Chain Solution
+
+## Execution
+To execute run
+
+```
+ruby all_theaters.rb input.csv 
+```
+
+# Original Solution
+
 ## Execution
 To execute run
 
